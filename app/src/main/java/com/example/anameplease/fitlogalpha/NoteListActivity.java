@@ -45,13 +45,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
     private File root = android.os.Environment.getExternalStorageDirectory();
     private String rootPath = root.toString();
 
-    private appFunc heyump = new appFunc();
-
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
-    private StorageReference uploadReference;
-    private UploadTask uploadTask;
-
     private RapidFloatingActionLayout rfaLayout;
     private RapidFloatingActionButton rfaBtn;
     private RapidFloatingActionHelper rfabHelper;
@@ -74,9 +67,7 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
         items.add(new RFACLabelItem<Integer>().setLabel("Append Log")
                 .setResId(R.mipmap.ic_launcher)
                 .setWrapper(1));
-        items.add(new RFACLabelItem<Integer>().setLabel("Upload")
-                .setResId(R.mipmap.ic_launcher)
-                .setWrapper(2));
+
 
         rfaContent
                 .setItems(items)
@@ -91,10 +82,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
                 rfaBtn,
                 rfaContent
         ).build();
-
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReferenceFromUrl("gs://fitlogalpha.appspot.com/LogContainer");
 
         binding.recyclerView.setHasFixedSize(true);
 
@@ -130,9 +117,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
             @Override
             public void onItemLongClick(Notes item) {
 
-                new Async1(getApplicationContext()).writeDBToSD(getApplicationContext(), binding.edttxtAppend.getText().toString()+".csv");
-
-                Toast.makeText(getApplicationContext(), "CSV created", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -195,30 +179,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.fade_out);
     }
 
-    public void fireBaseUpload (String path, String FileName){
-        File file = new File(path);
-
-
-        uploadReference = storageReference.child(FileName);
-
-        uploadTask= uploadReference.putFile(Uri.fromFile(file));
-
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Success!!!", Toast.LENGTH_LONG);
-                toast.show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Nope", Toast.LENGTH_LONG);
-                toast.show();
-
-            }
-        });
-
-    }
 
     @Override
     public void onRFACItemLabelClick(int position, RFACLabelItem item) {
@@ -239,19 +199,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
                                     new Async1(getApplicationContext()).appendToSD(pathFile, binding.edttxtAppend.getText().toString(), getApplicationContext());
 
                                 }
-                            }
-                        })
-                        .build()
-                        .show();
-                break;
-            case "Upload":
-                new ChooserDialog().with(this)
-                        .withStartFile((rootPath))
-                        .withChosenListener(new ChooserDialog.Result() {
-                            @Override
-                            public void onChoosePath(String path, File pathFile) {
-
-                                fireBaseUpload(path,pathFile.getName());
                             }
                         })
                         .build()

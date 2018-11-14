@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent4);
                         return true;
                     case R.id.logView1:
-                        Intent intent5 = new Intent(MainActivity.this, NoteListActivity.class);
+                        Intent intent5 = new Intent(MainActivity.this, DBViewActivity.class);
                         startActivity(intent5);
                         return true;
                     case R.id.new_log2:

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.anameplease.fitlogalpha.databinding.ActivityLogCreatorBinding;
@@ -56,6 +57,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
     private StorageReference storageReference;
     private StorageReference uploadReference;
     private UploadTask uploadTask;
+    private String liftname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +81,10 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
         rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
         List<RFACLabelItem> items = new ArrayList<>();
 
-        items.add(new RFACLabelItem<Integer>().setLabel("Add")
+        items.add(new RFACLabelItem<Integer>().setLabel("Add Log")
                 .setResId(R.mipmap.ic_launcher)
                 .setWrapper(1));
-        items.add(new RFACLabelItem<Integer>().setLabel("View Log")
+        items.add(new RFACLabelItem<Integer>().setLabel("Edit Logs")
                 .setResId(R.mipmap.ic_launcher)
                 .setWrapper(2));
 
@@ -100,6 +102,19 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
                 rfaContent
         ).build();
 
+        binding.btnBench.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                liftname = "Bench";
+            }
+        });
+
+        binding.btnDeadlift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                liftname = "Deadlifts";
+            }
+        });
 
     }
 
@@ -114,7 +129,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
         switch (item.getLabel()){
 
 
-            case "Add":
+            case "Add Log":
 
 
                 Integer id = Integer.valueOf(binding.txtID.getText().toString());
@@ -126,7 +141,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
 
 
 
-                String name = binding.txtNm.getText().toString();
+                String name = liftname;
                 int month = binding.simpleDatePicker.getMonth() + 1;
                 String selectedDate = binding.simpleDatePicker.getDayOfMonth()+""+month+""+binding.simpleDatePicker.getYear();
                 Integer date = Integer.valueOf(selectedDate);
@@ -134,7 +149,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
 
 
 
-                if ( TextUtils.isEmpty(binding.txtNm.getText()) || TextUtils.isEmpty(binding.txtID.getText()) || (binding.simpleDatePicker.getYear() == 0) || TextUtils.isEmpty(binding.txtNt.getText()) || (binding.simpleDatePicker.getMonth() == 0) || (binding.simpleDatePicker.getDayOfMonth() == 0)){
+                if ( TextUtils.isEmpty(binding.txtID.getText()) || (binding.simpleDatePicker.getYear() == 0) || TextUtils.isEmpty(binding.txtNt.getText()) || (binding.simpleDatePicker.getMonth() == 0) || (binding.simpleDatePicker.getDayOfMonth() == 0)){
                     Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropriate data", Toast.LENGTH_LONG);
                     toast1.show();
                 } else {
@@ -148,8 +163,8 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
                 }
 
                 break;
-            case "View Log":
-                Intent intent5 = new Intent(LogCreator.this, DBViewActivity.class);
+            case "Edit Logs":
+                Intent intent5 = new Intent(LogCreator.this, NoteListActivity.class);
                 startActivity(intent5);
                 break;
 
