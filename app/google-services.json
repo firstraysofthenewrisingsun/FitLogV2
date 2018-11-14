@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "653991725221",
+    "firebase_url": "https://fitlogalpha.firebaseio.com",
+    "project_id": "fitlogalpha",
+    "storage_bucket": "fitlogalpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653991725221:android:1ecaeb70b0d6c088",
+        "android_client_info": {
+          "package_name": "com.example.anameplease.fitlogalpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653991725221-jum6q3r3o8mksd378co20cibl83i0oll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdFj3FJ1cT-mJS_c-qQs09frO3OoD8UgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

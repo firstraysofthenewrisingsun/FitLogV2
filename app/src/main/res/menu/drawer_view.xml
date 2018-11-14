@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/new_log2"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="New Log"/>
+    <item
+        android:id="@+id/logView1"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="View Logs"/>
+    <item
+        android:id="@+id/max_estimate1"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Max Estimate" />
+    <item
+        android:id="@+id/fit_util1"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="Fitness Utilities" />
+
+
+</group>
+</menu>
