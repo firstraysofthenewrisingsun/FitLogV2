@@ -131,28 +131,25 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
 
             case "Add Log":
 
-
-                Integer id = Integer.valueOf(binding.txtID.getText().toString());
-
-                List<Notes> notesList = new Async1(getApplicationContext()).getAll();
-
-                int newid = newID(id, notesList);
-
-
-
-
-                String name = liftname;
-                int month = binding.simpleDatePicker.getMonth() + 1;
-                String selectedDate = binding.simpleDatePicker.getDayOfMonth()+""+month+""+binding.simpleDatePicker.getYear();
-                Integer date = Integer.valueOf(selectedDate);
-                String note = binding.txtNt.getText().toString();
-
-
-
                 if ( TextUtils.isEmpty(binding.txtID.getText()) || (binding.simpleDatePicker.getYear() == 0) || TextUtils.isEmpty(binding.txtNt.getText()) || (binding.simpleDatePicker.getMonth() == 0) || (binding.simpleDatePicker.getDayOfMonth() == 0)){
                     Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropriate data", Toast.LENGTH_LONG);
                     toast1.show();
                 } else {
+
+                    Integer id = Integer.valueOf(binding.txtID.getText().toString());
+
+                    List<Notes> notesList = new Async1(getApplicationContext()).getAll();
+
+                    int newid = newID(id, notesList);
+
+
+
+
+                    String name = liftname;
+                    int month = binding.simpleDatePicker.getMonth() + 1;
+                    String selectedDate = binding.simpleDatePicker.getDayOfMonth()+""+month+""+binding.simpleDatePicker.getYear();
+                    Integer date = Integer.valueOf(selectedDate);
+                    String note = binding.txtNt.getText().toString();
 
                     noteToInsert  = new Notes(newid, name, date, note);
 
@@ -226,7 +223,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
         return newid;
     }
 
-    private class Async1 extends NotesServices {
+    private static class Async1 extends NotesServices {
 
         public Async1(Context context){
             super(context);

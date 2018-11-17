@@ -23,7 +23,7 @@ public class FitUtilActivity extends AppCompatActivity {
 
     private ActivityFitUtilBinding binding;
 
-    private static final int NUM_PAGES = 1;
+    private static final int NUM_PAGES = 2;
 
     private PagerAdapter mPagerAdapter;
 
@@ -50,7 +50,11 @@ public class FitUtilActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-                return new StepCounterFragment();
+
+            if (position == 0)
+                return  new RPE_Calc_Fragment();
+            else
+                 return new StepCounterFragment();
         }
 
         @Override

@@ -2,22 +2,26 @@ package com.example.anameplease.fitlogalpha;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.anameplease.fitlogalpha.databinding.ActivityMainBinding;
+import com.gjiazhe.panoramaimageview.GyroscopeObserver;
+import com.romainpiel.shimmer.Shimmer;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private GyroscopeObserver gyroscopeObserver;
+
 
 
     @Override
@@ -28,9 +32,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
+        gyroscopeObserver = new GyroscopeObserver();
+
+        gyroscopeObserver.setMaxRotateRadian(Math.PI/9);
+
+        binding.panoramaImageView.setGyroscopeObserver(gyroscopeObserver);
+
+        binding.panoramaImageView.setEnableScrollbar(false);
+
+        Shimmer shim = new Shimmer();
+
+        shim.start(binding.textView);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
         binding.navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -57,16 +74,25 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent6);
                         return true;
 
-
-
                 }
-
-
 
                 return true;
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        gyroscopeObserver.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gyroscopeObserver.unregister();
     }
 
     @Override

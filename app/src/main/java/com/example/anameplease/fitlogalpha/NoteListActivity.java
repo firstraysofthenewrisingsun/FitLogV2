@@ -36,7 +36,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteListActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener{
+public class NoteListActivity extends AppCompatActivity {
 
     private ActivityNoteListBinding binding;
     private RecyclerView.Adapter mAdapter;
@@ -56,32 +56,6 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
         binding = DataBindingUtil.setContentView(this, R.layout.activity_note_list);
 
         final Context context  = getApplicationContext();
-
-        rfaLayout = binding.activityLogRfal;
-        rfaBtn = binding.activityLogRfab;
-
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
-
-        items.add(new RFACLabelItem<Integer>().setLabel("Append Log")
-                .setResId(R.mipmap.ic_launcher)
-                .setWrapper(1));
-
-
-        rfaContent
-                .setItems(items)
-                .setIconShadowRadius(RFABTextUtil.dip2px(context, 5))
-                .setIconShadowColor(0xff888888)
-                .setIconShadowDy(RFABTextUtil.dip2px(context, 5))
-        ;
-
-        rfabHelper = new RapidFloatingActionHelper(
-                context,
-                rfaLayout,
-                rfaBtn,
-                rfaContent
-        ).build();
 
         binding.recyclerView.setHasFixedSize(true);
 
@@ -180,42 +154,7 @@ public class NoteListActivity extends AppCompatActivity implements RapidFloating
     }
 
 
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        switch (item.getLabel()){
-            case "Append Log":
-                new ChooserDialog().with(this)
-                        .withStartFile((rootPath))
-                        .withChosenListener(new ChooserDialog.Result() {
-                            @Override
-                            public void onChoosePath(String path, File pathFile) {
-
-                                if (TextUtils.isEmpty(binding.edttxtAppend.getText())){
-                                    Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropiate data", Toast.LENGTH_LONG);
-                                    toast1.show();
-                                } else {
-
-                                    String data = binding.edttxtAppend.getText().toString();
-                                    new Async1(getApplicationContext()).appendToSD(pathFile, binding.edttxtAppend.getText().toString(), getApplicationContext());
-
-                                }
-                            }
-                        })
-                        .build()
-                        .show();
-                break;
-
-        }
-
-    }
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-
-    }
-
-
-    private class Async1 extends NotesServices{
+    private static class Async1 extends NotesServices{
 
         private AppDatabase db;
 

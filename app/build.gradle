@@ -55,7 +55,8 @@ dependencies {
     implementation 'com.evrencoskun.library:tableview:0.8.8'
     implementation 'com.github.levitnudi:LegacyTableView:1.2'
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
-
+    implementation 'com.gjiazhe:PanoramaImageView:1.0'
+    implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'

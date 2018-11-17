@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="fitlog_theme" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorPrimary">@color/fitlog_statusbar</item>
+        <item name="android:navigationBarColor">@android:color/holo_blue_dark</item>
+        <item name="android:statusBarColor">@color/fitlog_statusbar</item>
+        <item name="colorPrimaryDark">@android:color/holo_purple</item>
+        <item name="android:colorBackground">@color/fitlog_background</item>
+    </style>
+
 </resources>

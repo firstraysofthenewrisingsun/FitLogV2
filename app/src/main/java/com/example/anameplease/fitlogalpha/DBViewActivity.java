@@ -178,7 +178,13 @@ public class DBViewActivity extends AppCompatActivity implements RapidFloatingAc
 
     }
 
-    private class Async1 extends NotesServices {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.fade_out);
+    }
+
+    private static class Async1 extends NotesServices {
 
         public Async1(Context context){
             super(context);

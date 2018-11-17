@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
@@ -41,6 +42,8 @@ public class MaxEstimateActivity extends AppCompatActivity {
 
     private PagerAdapter mPagerAdapter;
 
+    private ArrayList<Fragment> fragmentArrayList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MaxEstimateActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
+
 
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         binding.viewPager2.setAdapter(mPagerAdapter);
