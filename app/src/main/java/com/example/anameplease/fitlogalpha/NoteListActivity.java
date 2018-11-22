@@ -71,7 +71,7 @@ public class NoteListActivity extends AppCompatActivity {
             public void onItemClick(Notes item) {
 
                 if (TextUtils.isEmpty(binding.edttxtAppend.getText())) {
-                    Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropiate data", Toast.LENGTH_LONG);
+                    Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropriate data", Toast.LENGTH_LONG);
                     toast1.show();
                 } else {
 

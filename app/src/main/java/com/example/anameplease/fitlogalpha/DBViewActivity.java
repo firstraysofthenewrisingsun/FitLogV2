@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.example.anameplease.fitlogalpha.databinding.ActivityDbviewBinding;
+import com.github.florent37.awesomebar.ActionItem;
+import com.github.florent37.awesomebar.AwesomeBar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DBViewActivity extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class DBViewActivity extends AppCompatActivity {
 
     private ActivityDbviewBinding binding;
 
@@ -41,9 +43,6 @@ public class DBViewActivity extends AppCompatActivity implements RapidFloatingAc
     private StorageReference storageReference;
     private StorageReference uploadReference;
     private UploadTask uploadTask;
-    private RapidFloatingActionLayout rfaLayout;
-    private RapidFloatingActionButton rfaBtn;
-    private RapidFloatingActionHelper rfabHelper;
     private File root = android.os.Environment.getExternalStorageDirectory();
     private String rootPath = root.toString();
 
@@ -53,47 +52,42 @@ public class DBViewActivity extends AppCompatActivity implements RapidFloatingAc
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dbview);
 
-        Toolbar toolbar = binding.toolbar2;
+        /*Toolbar toolbar = binding.toolbar2;
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();*/
+
+        binding.bar.addAction(R.drawable.icons8upload24, "Upload");
+
+        binding.bar.setActionItemClickListener(new AwesomeBar.ActionItemClickListener() {
+            @Override
+            public void onActionItemClicked(int position, ActionItem actionItem) {
+                switch (actionItem.getText()){
+                    case "Upload":
+                        new ChooserDialog().with(DBViewActivity.this)
+                                .withStartFile((rootPath))
+                                .withChosenListener(new ChooserDialog.Result() {
+                                    @Override
+                                    public void onChoosePath(String path, File pathFile) {
+
+                                        fireBaseUpload(path,pathFile.getName());
+                                    }
+                                })
+                                .build()
+                                .show();
+                        break;
+                }
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://fitlogalpha.appspot.com/LogContainer");
 
         final Context context  = getApplicationContext();
 
-        rfaLayout = binding.activityLogRfal;
-        rfaBtn = binding.activityLogRfab;
-
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
-
-        items.add(new RFACLabelItem<Integer>().setLabel("Upload")
-                .setResId(R.mipmap.ic_launcher)
-                .setWrapper(2));
-
-        rfaContent
-                .setItems(items)
-                .setIconShadowRadius(RFABTextUtil.dip2px(context, 5))
-                .setIconShadowColor(0xff888888)
-                .setIconShadowDy(RFABTextUtil.dip2px(context, 5))
-        ;
-
-        rfabHelper = new RapidFloatingActionHelper(
-                context,
-                rfaLayout,
-                rfaBtn,
-                rfaContent
-        ).build();
-
         List<Notes> all = new Async1(getApplicationContext()).getAll();
 
         LegacyTableView.insertLegacyTitle("Id", "Name", "Date", "Notes");
-
-        String[] arr = new String[all.size()];
-
 
         for (int i=0; i< all.size(); i++) {
 
@@ -151,30 +145,6 @@ public class DBViewActivity extends AppCompatActivity implements RapidFloatingAc
 
             }
         });
-
-    }
-
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        switch (item.getLabel()){
-            case "Upload":
-                new ChooserDialog().with(this)
-                        .withStartFile((rootPath))
-                        .withChosenListener(new ChooserDialog.Result() {
-                            @Override
-                            public void onChoosePath(String path, File pathFile) {
-
-                                fireBaseUpload(path,pathFile.getName());
-                            }
-                        })
-                        .build()
-                        .show();
-                break;
-        }
-    }
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
 
     }
 

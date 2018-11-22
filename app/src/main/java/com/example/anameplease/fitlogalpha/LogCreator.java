@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.anameplease.fitlogalpha.databinding.ActivityLogCreatorBinding;
+import com.github.florent37.awesomebar.AwesomeBar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class LogCreator extends AppCompatActivity implements RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener{
+public class LogCreator extends AppCompatActivity {
 
     private ActivityLogCreatorBinding binding;
 
@@ -49,9 +50,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
     private File root = android.os.Environment.getExternalStorageDirectory();
     private String rootPath = root.toString();
 
-    private RapidFloatingActionLayout rfaLayout;
-    private RapidFloatingActionButton rfaBtn;
-    private RapidFloatingActionHelper rfabHelper;
+
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -65,42 +64,64 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
         binding = DataBindingUtil.setContentView(this, R.layout.activity_log_creator);
 
 
-        Toolbar toolbar = binding.toolbar2;
+        /*Toolbar toolbar = binding.toolbar2;
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();*/
 
         final Context context  = getApplicationContext();
-        rfaLayout = binding.activityLogRfal;
-        rfaBtn = binding.activityLogRfab;
+
+        binding.bar.addOverflowItem("Add Log");
+        binding.bar.addOverflowItem("Edit Logs");
+
+        binding.bar.setOverflowActionItemClickListener(new AwesomeBar.OverflowActionItemClickListener() {
+            @Override
+            public void onOverflowActionItemClicked(int position, String item) {
+                switch (item){
+                    case "Add Log":
+
+                        if ( TextUtils.isEmpty(binding.txtID.getText()) || (binding.simpleDatePicker.getYear() == 0) || TextUtils.isEmpty(binding.txtNt.getText()) || (binding.simpleDatePicker.getMonth() == 0) || (binding.simpleDatePicker.getDayOfMonth() == 0)){
+                            Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropriate data", Toast.LENGTH_LONG);
+                            toast1.show();
+                        } else {
+
+                            Integer id = Integer.valueOf(binding.txtID.getText().toString());
+
+                            List<Notes> notesList = new Async1(getApplicationContext()).getAll();
+
+                            int newid = newID(id, notesList);
+
+
+
+
+                            String name = liftname;
+                            int month = binding.simpleDatePicker.getMonth() + 1;
+                            String selectedDate = binding.simpleDatePicker.getDayOfMonth()+""+month+""+binding.simpleDatePicker.getYear();
+                            Integer date = Integer.valueOf(selectedDate);
+                            String note = binding.txtNt.getText().toString();
+
+                            noteToInsert  = new Notes(newid, name, date, note);
+
+                            new Async1(getApplicationContext(), noteToInsert).execute(noteToInsert);
+
+                            Toast toast = Toast.makeText(getApplicationContext(), "Success!!! "+noteToInsert.getName()+" "+noteToInsert.getId(), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        break;
+                    case "Edit Logs":
+                        Intent intent5 = new Intent(LogCreator.this, NoteListActivity.class);
+                        startActivity(intent5);
+                        break;
+
+                }
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReferenceFromUrl("gs://fitlogalpha.appspot.com/LogContainer");
 
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(context);
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
 
-        items.add(new RFACLabelItem<Integer>().setLabel("Add Log")
-                .setResId(R.mipmap.ic_launcher)
-                .setWrapper(1));
-        items.add(new RFACLabelItem<Integer>().setLabel("Edit Logs")
-                .setResId(R.mipmap.ic_launcher)
-                .setWrapper(2));
-
-        rfaContent
-                .setItems(items)
-                .setIconShadowRadius(RFABTextUtil.dip2px(context, 5))
-                .setIconShadowColor(0xff888888)
-                .setIconShadowDy(RFABTextUtil.dip2px(context, 5))
-        ;
-
-        rfabHelper = new RapidFloatingActionHelper(
-                context,
-                rfaLayout,
-                rfaBtn,
-                rfaContent
-        ).build();
 
         binding.btnBench.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,56 +145,7 @@ public class LogCreator extends AppCompatActivity implements RapidFloatingAction
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.fade_out);
     }
 
-    @Override
-    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
-        switch (item.getLabel()){
 
-
-            case "Add Log":
-
-                if ( TextUtils.isEmpty(binding.txtID.getText()) || (binding.simpleDatePicker.getYear() == 0) || TextUtils.isEmpty(binding.txtNt.getText()) || (binding.simpleDatePicker.getMonth() == 0) || (binding.simpleDatePicker.getDayOfMonth() == 0)){
-                    Toast toast1 = Toast.makeText(getApplicationContext(), "Please enter the appropriate data", Toast.LENGTH_LONG);
-                    toast1.show();
-                } else {
-
-                    Integer id = Integer.valueOf(binding.txtID.getText().toString());
-
-                    List<Notes> notesList = new Async1(getApplicationContext()).getAll();
-
-                    int newid = newID(id, notesList);
-
-
-
-
-                    String name = liftname;
-                    int month = binding.simpleDatePicker.getMonth() + 1;
-                    String selectedDate = binding.simpleDatePicker.getDayOfMonth()+""+month+""+binding.simpleDatePicker.getYear();
-                    Integer date = Integer.valueOf(selectedDate);
-                    String note = binding.txtNt.getText().toString();
-
-                    noteToInsert  = new Notes(newid, name, date, note);
-
-                    new Async1(getApplicationContext(), noteToInsert).execute(noteToInsert);
-
-                    Toast toast = Toast.makeText(getApplicationContext(), "Success!!! "+noteToInsert.getName()+" "+noteToInsert.getId(), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-
-                break;
-            case "Edit Logs":
-                Intent intent5 = new Intent(LogCreator.this, NoteListActivity.class);
-                startActivity(intent5);
-                break;
-
-
-
-        }
-    }
-
-    @Override
-    public void onRFACItemIconClick(int position, RFACLabelItem item) {
-
-    }
 
     public void fireBaseUpload (String path, String FileName){
         File file = new File(path);

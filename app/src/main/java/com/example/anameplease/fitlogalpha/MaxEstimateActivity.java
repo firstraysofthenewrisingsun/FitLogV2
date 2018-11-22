@@ -50,10 +50,10 @@ public class MaxEstimateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_max_estimate);
 
-        Toolbar toolbar = binding.toolbar;
+        /*Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();*/
 
 
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());

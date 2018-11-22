@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
+
 android {
     compileSdkVersion 28
     dataBinding.enabled = true
@@ -57,6 +58,11 @@ dependencies {
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
     implementation 'com.gjiazhe:PanoramaImageView:1.0'
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
+    implementation 'com.github.florent37:awesomebar:1.0.3'
+    implementation 'com.dropbox.core:dropbox-core-sdk:3.0.10'
+    implementation 'com.specyci:residemenu:1.6+'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

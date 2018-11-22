@@ -34,10 +34,10 @@ public class FitUtilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fit_util);
 
-        Toolbar toolbar = binding.toolbar;
+        /*Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();*/
 
         mPagerAdapter = new FitUtilActivity.ScreenSlidePagerAdapter(getSupportFragmentManager());
         binding.viewPager2.setAdapter(mPagerAdapter);
