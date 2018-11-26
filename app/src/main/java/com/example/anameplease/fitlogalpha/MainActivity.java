@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ResideMenuItem itemViewLog;
     private ResideMenuItem itemMax;
     private ResideMenuItem itemFitUtil;
+    private ResideMenuItem itemHome;
+    private ResideMenuItem itemEditLog;
 
 
 
@@ -48,21 +50,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         resideMenu.attachToActivity(this);
 
+        itemHome = new ResideMenuItem(this, R.drawable.icons8homepage24, "Home");
         itemNewLog = new ResideMenuItem(this,R.drawable.icons8create24,"New Log" );
+        itemEditLog = new ResideMenuItem(this, R.drawable.icons8_compose_24, "Edit Logs");
         itemViewLog = new ResideMenuItem(this, R.drawable.icons8_view_24,"View Log" );
         itemMax = new ResideMenuItem(this, R.drawable.icons8weightlifting50,"Max Estimate" );
         itemFitUtil = new ResideMenuItem(this, R.drawable.icons8_gym_24, "Fitness Utilites" );
 
+        itemHome.setOnClickListener(this);
         itemNewLog.setOnClickListener(this);
         itemFitUtil.setOnClickListener(this);
         itemMax.setOnClickListener(this);
         itemViewLog.setOnClickListener(this);
+        itemEditLog.setOnClickListener(this);
 
 
+
+        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemNewLog, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemViewLog, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemEditLog, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemMax, ResideMenu.DIRECTION_LEFT);
         resideMenu.addMenuItem(itemFitUtil, ResideMenu.DIRECTION_LEFT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
         gyroscopeObserver = new GyroscopeObserver();
 
@@ -161,7 +171,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v == itemNewLog){
+        if (v== itemEditLog){
+            Intent intent8 = new Intent(MainActivity.this, NoteListActivity.class);
+            startActivity(intent8);
+        } else if (v==itemHome){
+            Intent intent7 = new Intent(MainActivity.this, MainActivity.class);
+            startActivity(intent7);
+        } else if (v == itemNewLog){
             Intent intent6 = new Intent(MainActivity.this, LogCreator.class);
             startActivity(intent6);
         } else if (v == itemViewLog){

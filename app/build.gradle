@@ -12,7 +12,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,6 +29,8 @@ android {
     }
     productFlavors {
     }
+
+
 }
 
 dependencies {
@@ -44,15 +54,10 @@ dependencies {
     implementation 'com.otaliastudios:viewprinter:0.3.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     def room_version = "1.1.1"
-
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-
-
-
     implementation 'com.google.firebase:firebase-database:16.0.4'
     implementation 'com.github.prabhat1707:DbExporterHelper:v1.0'
-
     implementation 'com.evrencoskun.library:tableview:0.8.8'
     implementation 'com.github.levitnudi:LegacyTableView:1.2'
     implementation 'com.balysv.materialmenu:material-menu:2.0.0'
@@ -61,6 +66,11 @@ dependencies {
     implementation 'com.github.florent37:awesomebar:1.0.3'
     implementation 'com.dropbox.core:dropbox-core-sdk:3.0.10'
     implementation 'com.specyci:residemenu:1.6+'
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+    implementation 'me.relex:circleindicator:1.2.2'
+    implementation 'org.apache.commons:commons-csv:1.5'
+
+
 
 
 }
